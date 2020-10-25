@@ -27,15 +27,23 @@ class GameButton extends Button {
   }
 
   void show() {
-    if (mouseOn()) {
-      stroke(#cccc00);
-      strokeWeight(5);
+    if (type != 1 || players.get(TURN).balance >= max(CURRENT_BET * 2, MIN_BET)) {
+      if (mouseOn()) {
+        stroke(#cccc00);
+        strokeWeight(5);
+      } else {
+        stroke(#afafaf);
+        strokeWeight(3);
+      }
     } else {
       stroke(#afafaf);
       strokeWeight(3);
     } 
 
-    fill(#cc0000);
+    if (type == 1 && players.get(TURN).balance < max(CURRENT_BET * 2, MIN_BET)) {
+      fill(#990000);
+    } else
+      fill(#cc0000);
     rectMode(CORNER);
     rect(x, y, w, h);
 
@@ -76,9 +84,11 @@ class GameButton extends Button {
       }
       break;
     case 1:
-      betting = max(CURRENT_BET * 2, MIN_BET);
-      scene = 2;
-      raising = true;
+      if (type != 1 || players.get(TURN).balance >= max(CURRENT_BET * 2, MIN_BET)) {
+        betting = max(CURRENT_BET * 2, MIN_BET);
+        scene = 2;
+        raising = true;
+      }
       break;
     case 2:
       players.get(TURN).folded = true;

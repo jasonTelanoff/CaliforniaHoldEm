@@ -2,7 +2,7 @@ ArrayList<Player> players = new ArrayList<Player>();
 ArrayList<Card> cards = new ArrayList<Card>();
 ArrayList<Card> table = new ArrayList<Card>();
 
-int CURRENT_BET, TURN, MIN_BET, TOTAL_BET, ANTI;
+int CURRENT_BET, TURN, MIN_BET, TOTAL_BET, ANTI, START_CASH;
 boolean SHOW_CARDS_ON_FOLD;
 
 // Local
@@ -23,6 +23,7 @@ void setup() {
   MIN_BET = 25;
   ANTI = 10;
   SHOW_CARDS_ON_FOLD = false;
+  START_CASH = 15;
 
   scene = 1;
   subBut = new SubmitButton();
@@ -34,7 +35,7 @@ void setup() {
   suits[3] = loadImage("assets/diamond.png");
 
   for (int i = 0; i < 2; i++)
-    players.add(new Player(100));
+    players.add(new Player(START_CASH));
 
   for (int i = 0; i < 2; i++)
     players.get(i).bet(ANTI);
