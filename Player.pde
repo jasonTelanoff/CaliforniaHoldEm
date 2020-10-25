@@ -9,7 +9,7 @@ class Player {
 
   void drawCards() {
     for (int i = 0; i < 2; i++)
-      hand.add(pickCard(cards));
+      hand.add(pickCard(cards, true, i));
   }
   
   void betMoney(int amount) {
