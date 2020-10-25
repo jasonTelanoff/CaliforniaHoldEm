@@ -40,8 +40,11 @@ class GameButton extends Button {
       strokeWeight(3);
     } 
 
-    if (type == 1 && players.get(TURN).balance < max(CURRENT_BET * 2, MIN_BET)) {
-      fill(#990000);
+    if (players.get(TURN).balance < max(CURRENT_BET * 2, MIN_BET)) {
+      if (type == 1 || (type == 0 && CURRENT_BET != 0))
+        fill(#990000);
+      else
+        fill(#cc0000);
     } else
       fill(#cc0000);
     rectMode(CORNER);
@@ -75,16 +78,19 @@ class GameButton extends Button {
   void action() {
     switch(type) {
     case 0:
+
       if (CURRENT_BET == 0) {
         endTurn();
       } else {
-        betting = max(CURRENT_BET, MIN_BET);
-        scene = 2;
-        raising = false;
+        if (players.get(TURN).balance >= max(CURRENT_BET * 2, MIN_BET)) {
+          betting = max(CURRENT_BET, MIN_BET);
+          scene = 2;
+          raising = false;
+        }
       }
       break;
     case 1:
-      if (type != 1 || players.get(TURN).balance >= max(CURRENT_BET * 2, MIN_BET)) {
+      if (players.get(TURN).balance >= max(CURRENT_BET * 2, MIN_BET)) {
         betting = max(CURRENT_BET * 2, MIN_BET);
         scene = 2;
         raising = true;
