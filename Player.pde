@@ -1,6 +1,7 @@
 class Player {
   int balance, amountBet;
   ArrayList<Card> hand = new ArrayList<Card>();
+  boolean bet = false, folded = false;
 
   Player(int balance) {
     this.balance = balance;

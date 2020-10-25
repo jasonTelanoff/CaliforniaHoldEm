@@ -53,11 +53,7 @@ class SubmitButton extends Button {
     CURRENT_BET = betting;
     
     scene = 1;
-    TURN++;
-    if (TURN == players.size()) {
-      TURN = 0;
-      endRound();
-    }
+    endTurn();
   }
 }
 

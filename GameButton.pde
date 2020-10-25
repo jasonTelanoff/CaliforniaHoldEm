@@ -68,21 +68,21 @@ class GameButton extends Button {
     switch(type) {
     case 0:
       if (CURRENT_BET == 0) {
-        TURN++;
-        if (TURN == players.size()) {
-          TURN = 0;
-          endRound();
-        }
+        endTurn();
       } else {
         betting = max(CURRENT_BET, MIN_BET);
         scene = 2;
-        calling = true;
+        raising = false;
       }
       break;
     case 1:
       betting = max(CURRENT_BET * 2, MIN_BET);
       scene = 2;
-      calling = false;
+      raising = true;
+      break;
+    case 2:
+      players.get(TURN).folded = true;
+      endTurn();
       break;
     }
   }

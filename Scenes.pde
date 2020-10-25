@@ -21,7 +21,7 @@ void gameScene() {
 }
 
 void betScene() {
-  if (!calling) betUpdate();
+  if (raising) betUpdate();
   gameScene();
 
   fill(100, 150);
@@ -33,7 +33,7 @@ void betScene() {
   rectMode(CENTER);
   rect(width/2, height/2, max(("  " + betting).length() * 30, 180), 60);
 
-  if (!calling)
+  if (raising)
     for (BetButton b : betButtons)
       b.show();
 

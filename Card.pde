@@ -1,10 +1,12 @@
 class Card {
   final int suit, num;
-  int x, y;
+  int x, y, w, h;
 
   Card(int suit, int num) {
     this.suit = suit;
     this.num = num;
+    w = width/10 - 30;
+    h = height/4 - 30;
   }
 
   void show() {    
@@ -12,17 +14,20 @@ class Card {
     stroke(0);
     strokeWeight(2);
     rectMode(CORNER);
-    rect(x, y, width/10 - 30, height/4 - 30, 20);
+    rect(x, y, w, h, 20);
 
     if (suit < 2)
       fill(0);
     else
       fill(#ff0000);
-    textSize(height/40);
+    textSize(30);
     textAlign(LEFT, TOP);
     text(showNum(num), x + 15, y + 15);
     textAlign(RIGHT, BOTTOM);
-    text(showNum(num), x + width/10 - 45, y + height/4 - 45);
+    text(showNum(num), x + w - 15, y + h - 15);
+    
+    imageMode(CENTER);
+    image(suits[suit], x + w/2, y + h/2, w/2, h/3);
   }
 
   void pick(boolean hand, int i) {
