@@ -15,27 +15,28 @@ boolean changed = false, raising = false;
 PImage[] suits = new PImage[4];
 
 void setup() {
-  fullScreen();
+  //fullScreen();
+  size(900, 600);
 
   TOTAL_BET = 0;
   CURRENT_BET = 0;
   TURN = 0;
-  MIN_BET = 25;
+  MIN_BET = 10;
   ANTI = 10;
   SHOW_CARDS_ON_FOLD = false;
-  START_CASH = 15;
+  START_CASH = 110;
 
   scene = 1;
   subBut = new SubmitButton();
   eBut = new ExitButton();
-  
+
   suits[0] = loadImage("assets/spade.png");
   suits[1] = loadImage("assets/club.png");
   suits[2] = loadImage("assets/heart.png");
   suits[3] = loadImage("assets/diamond.png");
 
   for (int i = 0; i < 2; i++)
-    players.add(new Player(START_CASH));
+    players.add(new Player(START_CASH, i));
 
   for (int i = 0; i < 2; i++)
     players.get(i).bet(ANTI);
@@ -80,11 +81,12 @@ void endTurn() {
 }
 
 void nextTurn() {
+  calcWin();
   TURN++;
   if (TURN == players.size()) {
     TURN = 0;
   }
-  if(players.get(TURN).folded)
+  if (players.get(TURN).folded)
     nextTurn();
 }
 
@@ -100,9 +102,7 @@ void endRound() {
     table.add(pickCard(cards, false, table.size()));
   else
     calcWin();
-}
-
-void calcWin() {
+  calcWin();
 }
 
 Card pickCard(ArrayList<Card> list, boolean hand, int i) {

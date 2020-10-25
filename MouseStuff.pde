@@ -6,9 +6,9 @@ void mousePressed() {
         b.action();
     break;
   case 2:
-    if(subBut.mouseOn())
+    if (subBut.mouseOn())
       subBut.action();
-    if(eBut.mouseOn())
+    if (eBut.mouseOn())
       eBut.action();
     changed = false;
     timeDown = 0;

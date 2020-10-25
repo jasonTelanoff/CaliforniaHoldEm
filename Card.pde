@@ -25,7 +25,7 @@ class Card {
     text(showNum(num), x + 15, y + 15);
     textAlign(RIGHT, BOTTOM);
     text(showNum(num), x + w - 15, y + h - 15);
-    
+
     imageMode(CENTER);
     image(suits[suit], x + w/2, y + h/2, w/2, h/3);
   }

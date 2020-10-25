@@ -1,7 +1,7 @@
 class Button {
   int x, y, w, h, s;
   String text;
-  
+
   void show() {
     if (mouseOn()) {
       stroke(204, 204, 0, 180);

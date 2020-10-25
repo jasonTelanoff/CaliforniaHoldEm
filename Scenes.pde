@@ -1,8 +1,8 @@
 void gameScene() {
   background(#23A039);
 
-  for (int i = 0; i < players.get(TURN).hand.size(); i++)
-    players.get(TURN).hand.get(i).show();
+  for (int i = 0; i < players.get(TURN).hand.length; i++)
+    players.get(TURN).hand[i].show();
 
   for (int i = 0; i < table.size(); i++)
     table.get(i).show();

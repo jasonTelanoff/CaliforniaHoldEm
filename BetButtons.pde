@@ -51,7 +51,7 @@ class SubmitButton extends Button {
   void action() {
     players.get(TURN).bet(betting);
     CURRENT_BET = betting;
-    
+
     scene = 1;
     endTurn();
   }
