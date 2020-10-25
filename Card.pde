@@ -1,5 +1,6 @@
 class Card {
-  int suit, num, x, y;
+  final int suit, num;
+  int x, y;
 
   Card(int suit, int num) {
     this.suit = suit;
@@ -10,6 +11,7 @@ class Card {
     fill(255);
     stroke(0);
     strokeWeight(2);
+    rectMode(CORNER);
     rect(x, y, width/10 - 30, height/4 - 30, 20);
 
     if (suit < 2)

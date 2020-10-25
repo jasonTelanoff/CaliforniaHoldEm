@@ -2,55 +2,66 @@ ArrayList<Player> players = new ArrayList<Player>();
 ArrayList<Card> cards = new ArrayList<Card>();
 ArrayList<Card> table = new ArrayList<Card>();
 
-int CURRENT_BET, TURN;
+int CURRENT_BET, TURN, MIN_BET, TOTAL_BET, ANTI;
 
 // Local
-Button[] buttons = new Button[3];
-
+GameButton[] gameButtons = new GameButton[3];
+BetButton[] betButtons = new BetButton[2];
+SubmitButton subBut;
+ExitButton eBut;
+int scene, betting = 0, timeDown = 0;
+boolean changed = false, calling = false;
 
 void setup() {
   fullScreen();
-  
+
+  TOTAL_BET = 0;
   CURRENT_BET = 0;
   TURN = 0;
-  
-  players.add(new Player(100));
+  MIN_BET = 25;
+  ANTI = 10;
+
+  scene = 1;
+  subBut = new SubmitButton();
+  eBut = new ExitButton();
+
+  for (int i = 0; i < 2; i++)
+    players.add(new Player(100));
+    
+  for (int i = 0; i < 2; i++)
+    players.get(i).bet(ANTI);
 
   for (int s = 0; s < 4; s++)
     for (int n = 1; n < 14; n++)
       cards.add(new Card(s, n));
 
   for (int i = 0; i < players.size(); i++)
-    players.get(0).drawCards();
-  
-  for(int i = 0; i < buttons.length; i++)
-    buttons[i] = new Button(i);
+    players.get(i).drawCards();
+
+  for (int i = 0; i < gameButtons.length; i++)
+    gameButtons[i] = new GameButton(i);
+
+  for (int i = 0; i < betButtons.length; i++)
+    betButtons[i] = new BetButton(i == 1);
 }
 
 void draw() {
-  background(#23A039);
-  
-  for (int i = 0; i < players.get(0).hand.size(); i++)
-    players.get(0).hand.get(i).show();
-  
-  for (int i = 0; i < table.size(); i++)
-    table.get(i).show();
-    
-  for(Button b : buttons)
-    b.show();
-    
-  fill(#ffff00);
-  textAlign(LEFT, TOP);
-  textSize(50);
-  text("$" + players.get(0).balance, 15, 15);
+  switch(scene) {
+  case 1:
+    gameScene();
+    break;
+  case 2:
+    betScene();
+    break;
+  }
 }
 
 void endRound() {
-  if(table.size() == 0) {
+  if (table.size() == 0) {
     table.add(pickCard(cards, false, 0));
     table.add(pickCard(cards, false, 1));
     table.add(pickCard(cards, false, 2));
-  } else if(table.size() < 5)
+  } else if (table.size() < 5)
     table.add(pickCard(cards, false, table.size()));
 }
 
