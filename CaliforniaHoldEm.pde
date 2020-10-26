@@ -10,6 +10,7 @@ GameButton[] gameButtons = new GameButton[3];
 BetButton[] betButtons = new BetButton[2];
 SubmitButton subBut;
 ExitButton eBut;
+ConfirmFoldButton confFold;
 int scene, betting = 0, timeDown = 0;
 boolean changed = false, raising = false;
 PImage[] suits = new PImage[4];
@@ -17,7 +18,7 @@ PImage[] suits = new PImage[4];
 void setup() {
   fullScreen();
   //size(900, 600);
-  
+
   TOTAL_BET = 0;
   CURRENT_BET = 0;
   TURN = 0;
@@ -29,6 +30,7 @@ void setup() {
   scene = 1;
   subBut = new SubmitButton();
   eBut = new ExitButton();
+  confFold = new ConfirmFoldButton();
 
   suits[0] = loadImage("assets/spade.png");
   suits[1] = loadImage("assets/club.png");
@@ -62,6 +64,9 @@ void draw() {
     break;
   case 2:
     betScene();
+    break;
+  case 3:
+    foldScene();
     break;
   default:
     background(200);

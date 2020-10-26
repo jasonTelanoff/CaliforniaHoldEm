@@ -71,3 +71,21 @@ class ExitButton extends Button {
     scene = 1;
   }
 }
+
+class ConfirmFoldButton extends Button {
+  ConfirmFoldButton() {
+    s = 3;
+    text = "Confirm Fold";
+    x = 9*width/10 - 150;
+    y = 9*height/12 + 15;
+    w = 300;
+    h = 60;
+  }
+
+  void action() {
+    players.get(TURN).folded = true;
+    if (winByFold() != -1) println(winByFold() + " won by folds");
+    endTurn();
+    scene = 1;
+  }
+}

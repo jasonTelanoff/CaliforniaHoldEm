@@ -58,3 +58,8 @@ void betUpdate() {
   } else
     timeDown++;
 }
+
+void foldScene() {
+  gameScene();
+  confFold.show();
+}

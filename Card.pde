@@ -5,8 +5,8 @@ class Card {
   Card(int suit, int num) {
     this.suit = suit;
     this.num = num;
-    w = width/10 - 30;
-    h = height/4 - 30;
+    h = height/3;
+    w = h * 2/3;
   }
 
   void show() {    
@@ -32,10 +32,10 @@ class Card {
 
   void pick(boolean hand, int i) {
     if (hand) {
-      x = i * width/10 + 15;
-      y = 3*height/4 + 15;
+      x = i * (w + 15) + 15;
+      y = height - h - 15;
     } else {
-      x = width - i * width/10 - width/10 + 15;
+      x = width - (i + 1) * (w + 15);
       y = 15;
     }
   }

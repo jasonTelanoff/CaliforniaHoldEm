@@ -13,6 +13,12 @@ void mousePressed() {
     changed = false;
     timeDown = 0;
     break;
+  case 3:
+    if (confFold.mouseOn())
+      confFold.action();
+    else
+      scene = 1;
+    break;
   default:
     scene = 1;
   }
