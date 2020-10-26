@@ -2,37 +2,45 @@ package com.telanoff.californiaholdem.server;
 
 import java.net.*;
 import java.io.*;
-import java.util.Random;
+import java.time.*;
+import java.util.*;
 
 public class Main {
+    public static Thread mainThread;
+    public static volatile boolean isRunning;
+
+    public static final long FPS = 20;
+    public static final long MILIS = 1000 / FPS;
+
+    public static final int PORT = 56565;
+
     public static void main(String[] args) {
-        while (true) {
-            try {
-                ServerSocket socket = new ServerSocket(12345);
-                Socket client = socket.accept();
-                Random random = new Random();
+        isRunning = true;
 
-                System.out.println("Just connected to " + client.getRemoteSocketAddress());
-                DataInputStream in = new DataInputStream(client.getInputStream());
+        mainThread = new Thread(() -> {
+            long nextLoop = System.currentTimeMillis();
 
-                DataOutputStream out = new DataOutputStream(client.getOutputStream());
+            while (isRunning) {
+                while (nextLoop < System.currentTimeMillis()) {
+                    for (ServerClient client : Server.serverClients.values())
+                        client.update();
 
-                while (client.isConnected()) {
-                    out.write(String.format("%d %d %d %d\n", random.nextInt(450), random.nextInt(255), random.nextInt(450), random.nextInt(255)).getBytes());
+                    ThreadManager.update();
 
-                    while (in.available() > 0) {
-                        System.out.print((char)in.readByte());
+                    nextLoop += MILIS;
+
+                    if (nextLoop > System.currentTimeMillis()) {
+                        try {
+                            Thread.sleep(nextLoop - System.currentTimeMillis());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-
-                socket.close();
-                client.close();
-            } catch (SocketTimeoutException e) {
-                System.out.println("Timed out!");
-            } catch (IOException e) {
-                e.printStackTrace();
-                break;
             }
-        }
+        });
+        mainThread.start();
+
+        Server.Start(PORT, 6);
     }
 }

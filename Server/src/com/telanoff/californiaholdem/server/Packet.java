@@ -4,6 +4,14 @@ import java.nio.*;
 import java.util.*;
 
 public class Packet {
+    public enum ServerPackets {
+        Welcome
+    }
+
+    public enum ClientPackets {
+        WelcomeReceived
+    }
+
     private Vector<Byte> buffer = new Vector<>();
     private int readLength;
 
@@ -14,21 +22,21 @@ public class Packet {
             this.buffer.add(value);
     }
 
-    public void Dispose() {
+    public void dispose() {
         buffer.clear();
         readLength = 0;
     }
 
     public void shiftLength() {
-        shiftBytes(ByteBuffer.allocate(Integer.BYTES).putInt(buffer.size()).array());
+        shift(ByteBuffer.allocate(Integer.BYTES).putInt(buffer.size()).array());
     }
 
-    public void shiftBytes(byte[] values) {
+    public void shift(byte[] values) {
         for (int i = 0; i < values.length; i++)
             buffer.add(i, values[i]);
     }
 
-    public void pushBytes(byte[] values) {
+    public void push(byte[] values) {
         for (byte value : values)
             buffer.add(value);
     }
@@ -38,19 +46,19 @@ public class Packet {
     }
 
     public void push(short value) {
-        pushBytes(ByteBuffer.allocate(Short.BYTES).putShort(value).array());
+        push(ByteBuffer.allocate(Short.BYTES).putShort(value).array());
     }
 
     public void push(int value) {
-        pushBytes(ByteBuffer.allocate(Integer.BYTES).putInt(value).array());
+        push(ByteBuffer.allocate(Integer.BYTES).putInt(value).array());
     }
 
     public void push(long value) {
-        pushBytes(ByteBuffer.allocate(Long.BYTES).putLong(value).array());
+        push(ByteBuffer.allocate(Long.BYTES).putLong(value).array());
     }
 
     public void push(char value) {
-        pushBytes(ByteBuffer.allocate(Character.BYTES).putChar(value).array());
+        push(ByteBuffer.allocate(Character.BYTES).putChar(value).array());
     }
 
     public void push(String value) {
