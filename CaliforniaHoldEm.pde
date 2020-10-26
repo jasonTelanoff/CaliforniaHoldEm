@@ -15,8 +15,8 @@ boolean changed = false, raising = false;
 PImage[] suits = new PImage[4];
 
 void setup() {
-  //fullScreen();
-  size(900, 600);
+  fullScreen();
+  //size(900, 600);
   
   TOTAL_BET = 0;
   CURRENT_BET = 0;
@@ -35,10 +35,10 @@ void setup() {
   suits[2] = loadImage("assets/heart.png");
   suits[3] = loadImage("assets/diamond.png");
 
-  for (int i = 0; i < 2; i++)
+  for (int i = 0; i < 3; i++)
     players.add(new Player(START_CASH, i));
 
-  for (int i = 0; i < 2; i++)
+  for (int i = 0; i < players.size(); i++)
     players.get(i).bet(ANTI);
 
   for (int s = 0; s < 4; s++)

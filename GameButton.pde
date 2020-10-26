@@ -80,6 +80,8 @@ class GameButton extends Button {
     case 0:
 
       if (CURRENT_BET == 0) {
+        raising = false;
+        scene = 2;
         endTurn();
       } else {
         if (players.get(TURN).balance >= max(CURRENT_BET * 2, MIN_BET)) {
