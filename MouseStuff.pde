@@ -13,6 +13,8 @@ void mousePressed() {
     changed = false;
     timeDown = 0;
     break;
+  default:
+    scene = 1;
   }
 }
 

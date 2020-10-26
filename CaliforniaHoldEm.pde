@@ -17,7 +17,7 @@ PImage[] suits = new PImage[4];
 void setup() {
   //fullScreen();
   size(900, 600);
-
+  
   TOTAL_BET = 0;
   CURRENT_BET = 0;
   TURN = 0;
@@ -63,6 +63,8 @@ void draw() {
   case 2:
     betScene();
     break;
+  default:
+    background(200);
   }
 }
 
@@ -88,6 +90,7 @@ void nextTurn() {
   }
   if (players.get(TURN).folded)
     nextTurn();
+  scene = 0;
 }
 
 void endRound() {
@@ -105,6 +108,7 @@ void endRound() {
   calcWin();
 }
 
+int lastNum = 2;
 Card pickCard(ArrayList<Card> list, boolean hand, int i) {
   int index = (int) random(list.size());
   Card card = list.get(index);

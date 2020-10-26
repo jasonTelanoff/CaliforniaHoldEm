@@ -98,6 +98,7 @@ class GameButton extends Button {
       break;
     case 2:
       players.get(TURN).folded = true;
+      if(winByFold() != -1) println(winByFold() + " won by folds");
       endTurn();
       break;
     }
