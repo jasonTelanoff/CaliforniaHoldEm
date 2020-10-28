@@ -4,6 +4,7 @@ public class ServerSend {
     public static void send(int clientId, Packet packet) {
         packet.shiftLength();
         Server.serverClients.get(clientId).send(packet);
+        packet.dispose();
     }
 
     public static void sendToAll(int except, Packet packet) {
@@ -19,7 +20,7 @@ public class ServerSend {
     }
 
     public static void sendWelcome(int clientId, String msg) {
-        Packet packet = new Packet();
+        Packet packet = new Packet(Packet.ServerPackets.Welcome.ordinal());
         packet.push(clientId);
         packet.push(msg);
 

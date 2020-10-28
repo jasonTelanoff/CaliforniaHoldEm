@@ -1,4 +1,4 @@
-package com.telanoff.californiaholdem.server;
+package com.telanoff.californiaholdem.client;
 
 import java.nio.*;
 import java.util.*;

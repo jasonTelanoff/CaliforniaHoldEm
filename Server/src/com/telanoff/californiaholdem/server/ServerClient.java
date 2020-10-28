@@ -20,16 +20,33 @@ public class ServerClient {
         try {
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
+
+            System.out.println("Incoming connection from '" + socket.getLocalAddress() + ":" + socket.getLocalPort() + "'");
+            ServerSend.sendWelcome(id, "Welcome to the server!");
         } catch(IOException e) {
             System.err.println("Error Establishing Connection: " + e);
         }
     }
 
     public void disconnect() {
+        try {
+            socket.close();
+            socket = null;
+            in = null;
+            out = null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public boolean isConnected() {
+        return socket != null && socket.isConnected();
     }
 
     public void update() {
+        if (in == null)
+            return;
+
         try {
             if (in.available() > 0) {
                 currentPacket.dispose();
@@ -51,21 +68,21 @@ public class ServerClient {
     }
 
     public void send(Packet packet) {
+        if (out == null)
+            return;
+
         try {
             if (socket != null && socket.isConnected()) {
                 out.write(packet.getBuffer());
             }
-        } catch (Exception e) {
-
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     public void handle(byte[] buffer) {
         ThreadManager.executeOnMainThread(() -> {
-            Packet packet = new Packet(buffer);
-            int packetID = packet.readInt();
-
-            packet.dispose();
+            ServerHandle.handle(id, new Packet(buffer));
         });
     }
 }

@@ -1,9 +1,4 @@
-package com.telanoff.californiaholdem.server;
-
-import java.net.*;
-import java.io.*;
-import java.time.*;
-import java.util.*;
+package com.telanoff.californiaholdem.client;
 
 public class Main {
     public static Thread mainThread;
@@ -17,15 +12,15 @@ public class Main {
     public static void main(String[] args) {
         isRunning = true;
 
-        ServerHandle.initializeHandlers();
+        ClientHandle.initializeHandlers();
+        Client.connect("127.0.0.1", PORT);
 
         mainThread = new Thread(() -> {
             long nextLoop = System.currentTimeMillis();
 
             while (isRunning) {
                 while (nextLoop < System.currentTimeMillis()) {
-                    for (ServerClient client : Server.serverClients.values())
-                        client.update();
+                    Client.update();
 
                     ThreadManager.update();
 
@@ -42,7 +37,5 @@ public class Main {
             }
         });
         mainThread.start();
-
-        Server.Start(PORT, 6);
     }
 }
